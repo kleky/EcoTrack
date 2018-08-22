@@ -1,5 +1,7 @@
 FROM node:8.11.3-alpine
 
+LABEL maintainer="Ian Klek"
+
 RUN mkdir -p /app
 
 WORKDIR /app
