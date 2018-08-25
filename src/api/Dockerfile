@@ -1,14 +1,18 @@
-FROM microsoft/dotnet:sdk AS build-env
-WORKDIR /var/www/api
+FROM node:8.11.4-alpine
 
-COPY *.csproj ./
-RUN dotnet restore
+LABEL maintainer="Ian Klek"
 
-COPY . ./
-RUN dotnet publish -c Release -o out
+RUN mkdir -p /app
 
-# Build runtime image
-FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+#
+COPY package.json .
+##
+RUN ["npm", "install", "-g", "yarn"]
+RUN ["yarn", "install"]
+##
+COPY . /app
+##
+EXPOSE 4000/tcp
+#
+ENTRYPOINT ["node", "src/index.js"]
