@@ -8,3 +8,10 @@ services:
         build: '.'
         ports:
             - 3000:4200
+    api:
+        image: 'kleky/ecotrack-api'
+        volumes:
+          - ./src/api/src:/app/src
+        build: '.'
+        ports:
+            - 4000:4000
